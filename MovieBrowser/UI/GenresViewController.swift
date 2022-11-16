@@ -80,8 +80,10 @@ final class GenresViewController: UIViewController {
             switch result {
             case let .success(genres):
                 self.genres = genres
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.activityIndicator.stopAnimating()
+                }
             case let .failure(error):
                 print("Cannot get genres, reason: \(error)")
             }

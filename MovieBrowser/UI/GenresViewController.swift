@@ -22,7 +22,6 @@ final class GenresViewController: UIViewController {
 
     init(vm: MoviesViewModel) {
         self.moviesVM = vm
-
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -120,6 +119,11 @@ final class GenresViewController: UIViewController {
 
 extension GenresViewController: UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        moviesVM.currentGenreId = moviesVM.genres.value[indexPath.row].id
+        print("current movie id \(moviesVM.currentGenreId!)")
+        let moviesVC = MoviesViewController(vm: moviesVM)
+        moviesVC.title = moviesVM.genres.value[indexPath.row].name
+        navigationController?.pushViewController(moviesVC, animated: true)
         print("Row \(indexPath.row) selected")
     }
 }

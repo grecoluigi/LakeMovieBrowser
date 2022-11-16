@@ -9,13 +9,27 @@ import Foundation
 
 class MoviesViewModel : NSObject {
     
+    //Genres
+    
     private let genresProvider: GenresProvider
+    var currentGenreId: Int?
     var genres : Dynamic<[Genre]>
+    
+    // Movies by genre
+    private let moviesProvider: MoviesProvider
+    var isLoadingMovies : Bool = false
+    var currentPage : Int = 1
+    var totalPages : Int = 1
+    var movies : Dynamic<[Movie]>
+    
+    
     var error : Dynamic<String>
     
-    init(genresProvider: GenresProvider) {
+    init(genresProvider: GenresProvider, moviesProvider: MoviesProvider) {
         self.genresProvider = genresProvider
+        self.moviesProvider = moviesProvider
         genres = Dynamic<[Genre]>([])
+        movies = Dynamic<[Movie]>([])
         error = Dynamic<String>("")
     }
     
@@ -28,6 +42,32 @@ class MoviesViewModel : NSObject {
                 self.error.value = "Cannot get genres, reason: \(error)"
             }
         }
-
+    }
+    
+    func getMoviesByGenre() {
+        guard let currentGenreId = currentGenreId else { fatalError("Did not set genreId")}
+        isLoadingMovies = true
+        moviesProvider.getMovies(byGenre: currentGenreId, page: currentPage) { result in
+            switch result {
+            case .success(let movieResponse):
+                self.movies.value.append(contentsOf: movieResponse.results)
+                self.currentPage = movieResponse.page
+                print("Current page: \(movieResponse.page)")
+                self.totalPages = movieResponse.totalPages
+                print("Total pages: \(movieResponse.totalPages)")
+                self.isLoadingMovies = false
+            case .failure(let error):
+                self.error.value = "Cannot get movies, reason: \(error)"
+                self.isLoadingMovies = false
+                print(error)
+            }
+        }
+    }
+    
+    func clearMovies() {
+        currentGenreId = nil
+        currentPage = 1
+        totalPages = 1
+        self.movies.value = []
     }
 }

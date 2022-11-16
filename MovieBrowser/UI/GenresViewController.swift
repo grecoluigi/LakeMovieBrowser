@@ -13,15 +13,15 @@ final class GenresViewController: UIViewController {
         static let title = "Genres"
     }
 
-    private let genresProvider: GenresProvider
-
+    //private let genresProvider: GenresProvider
+    private let moviesVM : MoviesViewModel
     private let tableView = UITableView()
     private let activityIndicator = UIActivityIndicatorView()
 
-    private var genres = [Genre]()
+    //private var genres = [Genre]()
 
-    init(genresProvider: GenresProvider) {
-        self.genresProvider = genresProvider
+    init(vm: MoviesViewModel) {
+        self.moviesVM = vm
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,9 +33,34 @@ final class GenresViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupBindings()
         prepareUI()
-        getGenres()
+        
+        //getGenres()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        activityIndicator.startAnimating()
+        moviesVM.getGenres()
+    }
+    
+    private func setupBindings() {
+        
+        moviesVM.error.bind { [weak self] (_) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                guard let error = self?.moviesVM.error.value else { return }
+                UIAlertController.alert("Error".localized, error, completion: { (okaction) in })
+            }
+        }
+        
+        moviesVM.genres.bind { [weak self] (_) in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+            }
+        }
     }
 
     private func prepareUI() {
@@ -73,6 +98,7 @@ final class GenresViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
     }
 
+    /*
     private func getGenres() {
         activityIndicator.startAnimating()
 
@@ -89,6 +115,7 @@ final class GenresViewController: UIViewController {
             }
         }
     }
+     */
 }
 
 extension GenresViewController: UITableViewDelegate {
@@ -99,13 +126,13 @@ extension GenresViewController: UITableViewDelegate {
 
 extension GenresViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        genres.count
+        moviesVM.genres.value.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellId, for: indexPath)
         var configuration = cell.defaultContentConfiguration()
-        configuration.text = genres[indexPath.row].name
+        configuration.text = moviesVM.genres.value[indexPath.row].name
         cell.contentConfiguration = configuration
         return cell
     }

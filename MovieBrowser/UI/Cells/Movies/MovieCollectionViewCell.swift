@@ -1,5 +1,5 @@
 //
-//  MovieTableViewCell.swift
+//  MovieCollectionViewCell.swift
 //  MovieBrowser
 //
 //  Created by Luigi on 17/11/2022.
@@ -7,48 +7,43 @@
 
 import UIKit
 
-class MovieTableViewCell: UITableViewCell {
+class MovieCollectionViewCell: UICollectionViewCell {
 
-    var cornerRadius: CGFloat = 5.0
-
-    @IBOutlet weak var containerView: UIView!
+    var cornerRadius: CGFloat = 16.0
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var bodyTextView: UITextView!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var posterImageView: UIImageView!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        posterImageView.layer.cornerRadius = 13
-        posterImageView.clipsToBounds = true
-        bodyTextView.textContainer.lineFragmentPadding = 0
         // Apply rounded corners to contentView
-               containerView.layer.cornerRadius = cornerRadius
-               containerView.layer.masksToBounds = true
+               contentView.layer.cornerRadius = cornerRadius
+               contentView.layer.masksToBounds = true
                
                // Set masks to bounds to false to avoid the shadow
                // from being clipped to the corner radius
-            contentView.layer.cornerRadius = cornerRadius
-        contentView.layer.masksToBounds = false
+               layer.cornerRadius = cornerRadius
+               layer.masksToBounds = false
                
                // Apply a shadow
-        containerView.layer.shadowRadius = 8.0
-        containerView.layer.shadowOpacity = 0.10
-        containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOffset = CGSize(width: 0, height: 5)
+               layer.shadowRadius = 8.0
+               layer.shadowOpacity = 0.25
+               layer.shadowColor = UIColor.black.cgColor
+               layer.shadowOffset = CGSize(width: 0, height: 5)
     }
     
     override func layoutSubviews() {
-           super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-           // Improve scrolling performance with an explicit shadowPath
-           layer.shadowPath = UIBezierPath(
-               roundedRect: bounds,
-               cornerRadius: cornerRadius
-           ).cgPath
-       }
+            super.layoutSubviews()
+            
+            // Improve scrolling performance with an explicit shadowPath
+            layer.shadowPath = UIBezierPath(
+                roundedRect: bounds,
+                cornerRadius: cornerRadius
+            ).cgPath
+        }
     
     override func prepareForReuse() {
         titleLabel.text = ""
@@ -59,6 +54,7 @@ class MovieTableViewCell: UITableViewCell {
         super.prepareForReuse()
     }
     
+
     func configure(with movie: Movie) {
         titleLabel.text = movie.title
         yearLabel.text = movie.releaseDate.yearFromDate
@@ -82,10 +78,5 @@ class MovieTableViewCell: UITableViewCell {
         
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
-    }
-    
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie: Codable {
+struct Movie: Codable, Hashable {
     let id: Int
     let title: String
     let posterPath: String?
@@ -21,4 +21,13 @@ struct Movie: Codable {
         case releaseDate = "release_date"
         case overview
     }
+    
+    func hash(into hasher: inout Hasher) {
+      hasher.combine(id)
+    }
+    
+    static func == (lhs: Movie, rhs: Movie) -> Bool {
+      lhs.id == rhs.id
+    }
+
 }

@@ -10,4 +10,5 @@ import Foundation
 enum Endpoint : String {
     case genres = "/genre/movie/list"
     case discoverMovie = "/discover/movie"
+    case configuration = "/configuration"
 }

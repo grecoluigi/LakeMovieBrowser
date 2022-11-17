@@ -40,9 +40,9 @@ final class MoviesViewController: UIViewController {
         moviesVM.getMoviesByGenre()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         moviesVM.clearMovies()
-        super.viewWillDisappear(animated)
+        super.viewDidDisappear(animated)
     }
     
     private func setupBindings() {

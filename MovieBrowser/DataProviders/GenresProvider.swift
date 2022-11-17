@@ -15,7 +15,7 @@ final class GenresProvider {
     }
 
     func getGenres(completion: @escaping (Result<[Genre], Error>) -> Void) {
-        apiManager.makeRequest(request: ApiRequest(endpoint: "/genre/movie/list")) { (response: Result<GenresResponse, Error>) in
+        apiManager.makeRequest(request: ApiRequest(endpoint: .genres)) { (response: Result<GenresResponse, Error>) in
             switch response {
             case let .success(response):
                 completion(.success(response.genres))

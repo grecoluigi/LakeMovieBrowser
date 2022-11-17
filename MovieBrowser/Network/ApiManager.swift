@@ -35,6 +35,7 @@ final class ApiManager {
             }
         }.resume()
     }
+    
 
     private func makeURLRequest(from apiRequest: ApiRequest) -> URLRequest {
         URLRequest(url: apiRequest.baseURL

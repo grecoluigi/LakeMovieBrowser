@@ -18,7 +18,7 @@ final class MoviesProvider {
         let genreQueryItem = URLQueryItem(name: "with_genres", value: "\(genre)")
         let sortQueryItem = URLQueryItem(name: "sort_by", value: "popularity.desc")
         let pageQueryItem = URLQueryItem(name: "page", value: "\(page)")
-        apiManager.makeRequest(request: ApiRequest(endpoint: "/discover/movie", params: [sortQueryItem, genreQueryItem, pageQueryItem])) { (response: Result<MoviesResponse, Error>) in
+        apiManager.makeRequest(request: ApiRequest(endpoint: .discoverMovie, params: [sortQueryItem, genreQueryItem, pageQueryItem])) { (response: Result<MoviesResponse, Error>) in
             switch response {
             case let .success(response):
                 completion(.success(response))

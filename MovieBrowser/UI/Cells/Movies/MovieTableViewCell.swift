@@ -23,8 +23,11 @@ class MovieTableViewCell: UITableViewCell {
     
     func configure(with movie: Movie) {
         titleLabel.text = movie.title
-        yearLabel.text = movie.release_date
+        yearLabel.text = movie.releaseDate
         bodyLabel.text = movie.overview
+        if let posterPath = movie.posterPath {
+            
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -9,8 +9,8 @@ import UIKit
 
 final class MoviesViewController: UIViewController {
     private enum Constants {
-        static let cellId = "GenresCell"
-        static let title = "Genres"
+        static let cellId = "movieCell"
+        static let nibName = "MovieTableViewCell"
     }
     
     private let moviesVM : MoviesViewModel
@@ -91,7 +91,8 @@ final class MoviesViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cellId)
+        tableView.register(UINib(nibName: Constants.nibName, bundle: nil), forCellReuseIdentifier: Constants.cellId)
+        tableView.estimatedRowHeight = 199
     }
 }
 
@@ -104,10 +105,8 @@ extension MoviesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movie = moviesVM.movies.value[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellId, for: indexPath)
-        var configuration = cell.defaultContentConfiguration()
-        configuration.text = movie.title
-        cell.contentConfiguration = configuration
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellId, for: indexPath) as! MovieTableViewCell
+        cell.configure(with: movie)
         return cell 
     }
 }
@@ -116,6 +115,10 @@ extension MoviesViewController: UITableViewDataSource {
 
 extension MoviesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 199
     }
 }
 

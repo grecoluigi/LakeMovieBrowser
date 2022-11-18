@@ -10,7 +10,7 @@ import UIKit
 final class GenresViewController: UIViewController {
     private enum Constants {
         static let cellId = "GenresCell"
-        static let title = "Genres"
+        static let title = "genres".localized
     }
 
     //private let genresProvider: GenresProvider

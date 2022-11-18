@@ -40,7 +40,7 @@ final class ApiManager {
     private func makeURLRequest(from apiRequest: ApiRequest) -> URLRequest {
         URLRequest(url: apiRequest.baseURL
             .appending(path: apiRequest.endpoint)
-            .appending(queryItems: [URLQueryItem(name: "api_key", value: Constants.apiKey)])
+            .appending(queryItems: [URLQueryItem(name: "api_key", value: Constants.apiKey), URLQueryItem(name: "language", value: Bundle.main.preferredLocalizations.first!)])
             .appending(queryItems: apiRequest.params)
         )
     }

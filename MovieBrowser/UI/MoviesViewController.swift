@@ -219,11 +219,10 @@ extension MoviesViewController {
 
 extension MoviesViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected item")
         if let cell = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {
             let vc = MovieDetailViewController(movieVM: cell.vm)
             vc.modalPresentationStyle = .popover
             self.present(vc, animated: true)
-        } 
+        }
     }
 }

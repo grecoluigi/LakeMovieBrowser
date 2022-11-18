@@ -14,14 +14,14 @@ final class GenresViewController: UIViewController {
     }
 
     //private let genresProvider: GenresProvider
-    private let moviesVM : MoviesViewModel
+    private let genresVM : GenresViewModel
     private let tableView = UITableView()
     private let activityIndicator = UIActivityIndicatorView()
 
     //private var genres = [Genre]()
 
-    init(vm: MoviesViewModel) {
-        self.moviesVM = vm
+    init(vm: GenresViewModel) {
+        self.genresVM = vm
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -41,20 +41,20 @@ final class GenresViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         activityIndicator.startAnimating()
-        moviesVM.getGenres()
+        genresVM.getGenres()
     }
     
     private func setupBindings() {
         
-        moviesVM.error.bind { [weak self] (_) in
+        genresVM.error.bind { [weak self] (_) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
-                guard let error = self?.moviesVM.error.value else { return }
+                guard let error = self?.genresVM.error.value else { return }
                 UIAlertController.alert("Error".localized, error, completion: { (okaction) in })
             }
         }
         
-        moviesVM.genres.bind { [weak self] (_) in
+        genresVM.genres.bind { [weak self] (_) in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
                 self?.activityIndicator.stopAnimating()
@@ -119,24 +119,25 @@ final class GenresViewController: UIViewController {
 
 extension GenresViewController: UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        moviesVM.currentGenreId = moviesVM.genres.value[indexPath.row].id
-        print("current movie id \(moviesVM.currentGenreId!)")
-        let moviesVC = MoviesViewController(vm: moviesVM)
-        moviesVC.title = moviesVM.genres.value[indexPath.row].name
+        let apiManager = ApiManager()
+        let moviesProvider = MoviesProvider(apiManager: apiManager)
+        let genre = genresVM.genres.value[indexPath.row]
+        let moviesViewModel = MoviesViewModel(moviesProvider: moviesProvider, genreId: genre.id)
+        let moviesVC = MoviesViewController(vm: moviesViewModel)
+        moviesVC.title = genre.name
         navigationController?.pushViewController(moviesVC, animated: true)
-        print("Row \(indexPath.row) selected")
     }
 }
 
 extension GenresViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        moviesVM.genres.value.count
+        genresVM.genres.value.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellId, for: indexPath)
         var configuration = cell.defaultContentConfiguration()
-        configuration.text = moviesVM.genres.value[indexPath.row].name
+        configuration.text = genresVM.genres.value[indexPath.row].name
         cell.contentConfiguration = configuration
         return cell
     }

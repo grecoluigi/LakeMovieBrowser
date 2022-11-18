@@ -9,40 +9,24 @@ import Foundation
 
 class MoviesViewModel : NSObject {
     
-    //Genres
-    
-    private let genresProvider: GenresProvider
-    var currentGenreId: Int?
-    var genres : Dynamic<[Genre]>
-    
     // Movies by genre
     private let moviesProvider: MoviesProvider
     var isLoadingMovies : Bool = false
     var currentPage : Int = 1
     var totalPages : Int = 1
     var movies : Dynamic<[Movie]>
-    
+    var currentGenreId: Int?
     
     var error : Dynamic<String>
     
-    init(genresProvider: GenresProvider, moviesProvider: MoviesProvider) {
-        self.genresProvider = genresProvider
+    init(moviesProvider: MoviesProvider, genreId: Int) {
         self.moviesProvider = moviesProvider
-        genres = Dynamic<[Genre]>([])
+        currentGenreId = genreId
         movies = Dynamic<[Movie]>([])
         error = Dynamic<String>("")
     }
     
-    func getGenres() {
-        genresProvider.getGenres { result in
-            switch result {
-            case let .success(genres):
-                self.genres.value = genres
-            case let .failure(error):
-                self.error.value = "Cannot get genres, reason: \(error)"
-            }
-        }
-    }
+
     
     func getMoviesByGenre() {
         guard let currentGenreId = currentGenreId else { fatalError("Did not set genreId")}

@@ -20,7 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let apiManager = ApiManager()
         let genresProvider = GenresProvider(apiManager: apiManager)
-        let moviesProvider = MoviesProvider(apiManager: apiManager)
         let configurationProvider = ConfigurationProvider(apiManager: apiManager)
         configurationProvider.getConfiguration { result in
             switch result {
@@ -32,8 +31,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("Error getting configuration \(error)")
             }
         }
-        let moviesVM = MoviesViewModel(genresProvider: genresProvider, moviesProvider: moviesProvider)
-        let genresViewController = GenresViewController(vm: moviesVM)
+        let genresVM = GenresViewModel(genresProvider: genresProvider)
+        let genresViewController = GenresViewController(vm: genresVM)
 
         window?.rootViewController = UINavigationController(rootViewController: genresViewController)
         window?.makeKeyAndVisible()

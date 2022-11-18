@@ -9,3 +9,6 @@
 "genres" = "Generi";
 "ok" = "Ok";
 "error" = "Errore";
+"addToFavorites" = "Aggiungi ai preferiti";
+"removeToFavorites" = "Rimuovi dai preferiti";
+"favorites" = "Preferiti";

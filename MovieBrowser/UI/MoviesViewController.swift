@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MoviesViewController: UIViewController {
+final class MoviesViewController: UIViewController, UICollectionViewDelegate {
     private enum Constants {
         static let cellId = "movieCell"
         static let collectionViewCellId = "movieCollectionViewCell"
@@ -51,7 +51,8 @@ final class MoviesViewController: UIViewController {
           let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "movieCollectionViewCell",
             for: indexPath) as? MovieCollectionViewCell
-            cell?.vm = MovieCellViewModel(movie: movie)
+            let apiManager = ApiManager()
+            cell?.vm = MovieCellViewModel(movie: movie, movieDetailProvider: MovieDetailProvider(apiManager: apiManager))
           return cell
       })
       return dataSource
@@ -77,7 +78,6 @@ final class MoviesViewController: UIViewController {
     
     private func setupBindings() {
         moviesVM.movies.bind { [weak self] (_) in
-            let movies = self!.moviesVM.movies.value
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 self?.applySnapshot()
@@ -119,6 +119,7 @@ final class MoviesViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
         collectionView.register(UINib(nibName:"MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier:"movieCollectionViewCell")
+        collectionView.delegate = self
     }
     
     func createLayout() -> UICollectionViewLayout {

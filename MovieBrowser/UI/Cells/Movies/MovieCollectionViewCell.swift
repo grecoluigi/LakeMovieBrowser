@@ -59,6 +59,12 @@ class MovieCollectionViewCell: UICollectionViewCell {
                 self?.posterImageView.fade(to: self!.vm.posterImage.value)
             }
         }
+        
+        vm.runtime.bind { [weak self] (_) in
+            DispatchQueue.main.async {
+                self?.durationLabel.text = self?.vm.runtime.value
+            }
+        }
     }
 
     func configure() {
@@ -66,6 +72,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         yearLabel.text = vm.releaseDate?.yearFromDate
         bodyTextView.text = vm.overview
         vm.downloadPosterImage()
+        vm.getMovieRuntime()
     }
 
 }

@@ -52,9 +52,7 @@ class MoviesViewModel : NSObject {
             case .success(let movieResponse):
                 self.movies.value.append(contentsOf: movieResponse.results)
                 self.currentPage = movieResponse.page
-                print("Current page: \(movieResponse.page)")
                 self.totalPages = movieResponse.totalPages
-                print("Total pages: \(movieResponse.totalPages)")
                 self.isLoadingMovies = false
             case .failure(let error):
                 self.error.value = "Cannot get movies, reason: \(error)"

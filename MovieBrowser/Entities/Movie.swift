@@ -13,6 +13,7 @@ struct Movie: Codable, Hashable {
     let posterPath: String?
     let releaseDate: String
     let overview: String
+    var runtime: Int?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -20,6 +21,7 @@ struct Movie: Codable, Hashable {
         case posterPath = "poster_path"
         case releaseDate = "release_date"
         case overview
+        case runtime
     }
     
     func hash(into hasher: inout Hasher) {

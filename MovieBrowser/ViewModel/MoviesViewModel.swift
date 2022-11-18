@@ -22,8 +22,6 @@ class MoviesViewModel : NSObject {
     var totalPages : Int = 1
     var movies : Dynamic<[Movie]>
     
-    var imageBaseURL : String?
-    var imageSize : String?
     
     var error : Dynamic<String>
     
@@ -66,18 +64,6 @@ class MoviesViewModel : NSObject {
         }
     }
     
-    func setupConfiguration() {
-        let configurationProvider = ConfigurationProvider(apiManager: ApiManager())
-        configurationProvider.getConfiguration { result in
-            switch result {
-            case .success(let configuration):
-                self.imageBaseURL = configuration.images.baseURL
-                self.imageSize = configuration.images.posterSizes.first
-            case .failure(let error):
-                print("Error getting configuration \(error)")
-            }
-        }
-    }
     
     func clearMovies() {
         currentGenreId = nil

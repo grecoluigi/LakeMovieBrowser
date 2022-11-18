@@ -10,7 +10,6 @@ import UIKit
 final class MoviesViewController: UIViewController {
     private enum Constants {
         static let cellId = "movieCell"
-        static let nibName = "MovieTableViewCell"
         static let collectionViewCellId = "movieCollectionViewCell"
     }
     
@@ -19,7 +18,6 @@ final class MoviesViewController: UIViewController {
     }
     
     private let moviesVM : MoviesViewModel
-    private let tableView = UITableView()
     var collectionView : UICollectionView!
     private let activityIndicator = UIActivityIndicatorView()
     private lazy var dataSource = makeDataSource()
@@ -46,29 +44,23 @@ final class MoviesViewController: UIViewController {
     }
     
     func makeDataSource() -> DataSource {
-      // 1
       let dataSource = DataSource(
         collectionView: collectionView,
         cellProvider: { (collectionView, indexPath, movie) ->
           UICollectionViewCell? in
-          // 2
           let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "movieCollectionViewCell",
             for: indexPath) as? MovieCollectionViewCell
-            cell?.configure(with: movie)
+            cell?.vm = MovieCellViewModel(movie: movie)
           return cell
       })
       return dataSource
     }
     
     func applySnapshot(animatingDifferences: Bool = true) {
-      // 2
       var snapshot = Snapshot()
-      // 3
       snapshot.appendSections([.main])
-      // 4
         snapshot.appendItems(moviesVM.movies.value)
-      // 5
       dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
@@ -86,12 +78,9 @@ final class MoviesViewController: UIViewController {
     private func setupBindings() {
         moviesVM.movies.bind { [weak self] (_) in
             let movies = self!.moviesVM.movies.value
-            print("Got \(movies.count) movies")
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
-                self?.tableView.reloadData()
                 self?.applySnapshot()
-                //self?.collectionView.reloadData()
             }
         }
         
@@ -105,7 +94,6 @@ final class MoviesViewController: UIViewController {
     }
     
     private func prepareUI() {
-        //prepareTableView()
         prepareCollectionView()
         prepareActivityIndicator()
     }
@@ -121,7 +109,6 @@ final class MoviesViewController: UIViewController {
     }
     
     private func prepareCollectionView() {
-        //let collectionViewConfig = UICollectionLayoutListConfiguration(appearance: .plain)
         collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createLayout())
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -131,12 +118,7 @@ final class MoviesViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
-        
-        //collectionView.collectionViewLayout =  UICollectionViewCompositionalLayout.list(using: collectionViewConfig)
-        collectionView.delegate = self
-        //collectionView.dataSource = self
         collectionView.register(UINib(nibName:"MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier:"movieCollectionViewCell")
-        //collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: "movieCollectionViewCell")
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -152,86 +134,14 @@ final class MoviesViewController: UIViewController {
 
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = 16
-            // add leading and trailing insets to the section so groups are aligned to the center
             let sectionSideInset = (environment.container.contentSize.width - self.collectionView.bounds.width) / 2
             section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: sectionSideInset, bottom: 0, trailing: sectionSideInset)
-
-            // note this is not .groupPagingCentered
             section.orthogonalScrollingBehavior = .none
-
             return section
         }
-
         return layout
     }
-    
-    private func layout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(view.bounds.width),
-            heightDimension: .absolute(199))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        //let group = NSCollectionLayoutGroup.vertical(
-        //    layoutSize: groupSize, subitem: item, count: 1) // *
-        //group.edgeSpacing = NSCollectionLayoutEdgeSpacing(
-        //    leading: .fixed(13), top: .flexible(0),
-        //    trailing: .fixed(13), bottom: .flexible(0))
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 16
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.scrollDirection = .vertical
-        let layout = UICollectionViewCompositionalLayout(
-            section: section, configuration:config)
-        return layout
-    }
-    
-    private func prepareTableView() {
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: Constants.nibName, bundle: nil), forCellReuseIdentifier: Constants.cellId)
-        tableView.estimatedRowHeight = 199
-    }
 }
-
-// MARK: - UITableViewDataSource
-
-extension MoviesViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return moviesVM.movies.value.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let movie = moviesVM.movies.value[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellId, for: indexPath) as! MovieTableViewCell
-        cell.configure(with: movie)
-        return cell 
-    }
-}
-
-// MARK: - UITableViewDelegate
-
-extension MoviesViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 199
-    }
-}
-
 // MARK: - UIScrollViewDelegate
 
 extension MoviesViewController: UIScrollViewDelegate {
@@ -258,35 +168,6 @@ extension MoviesViewController: UIScrollViewDelegate {
         }
     }
 }
-
-// MARK: - UICollectionViewDelegate
-
-extension MoviesViewController : UICollectionViewDelegate {
-  
-}
-
-// MARK: - UICollectionViewDataSource
-
-/*
- extension MoviesViewController : UICollectionViewDataSource {
- func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
- return moviesVM.movies.value.count
- }
- 
- 
- func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
- let movie = moviesVM.movies.value[indexPath.row]
- guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else { fatalError("Cannot dequeue cell") }
- cell.configure(with: movie)
- cell.backgroundColor = .white
- if indexPath.row == moviesVM.movies.value.count {
- 
- }
- return cell
- }
- 
- 
- }
  
 
 
@@ -334,4 +215,4 @@ extension MoviesViewController {
             })
     }
 }
- */
+

@@ -21,6 +21,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let apiManager = ApiManager()
         let genresProvider = GenresProvider(apiManager: apiManager)
         let moviesProvider = MoviesProvider(apiManager: apiManager)
+        let configurationProvider = ConfigurationProvider(apiManager: apiManager)
+        configurationProvider.getConfiguration { result in
+            switch result {
+            case .success(let configuration):
+                let baseURL = configuration.images.baseURL
+                let imageSize = configuration.images.posterSizes[3] // picks "w342", ideally you could pick between all sizes because they could change
+                ConfigurationSettings.shared.configureImagePath(imageBaseURL: baseURL, imageSize: imageSize)
+            case .failure(let error):
+                print("Error getting configuration \(error)")
+            }
+        }
         let moviesVM = MoviesViewModel(genresProvider: genresProvider, moviesProvider: moviesProvider)
         let genresViewController = GenresViewController(vm: moviesVM)
 

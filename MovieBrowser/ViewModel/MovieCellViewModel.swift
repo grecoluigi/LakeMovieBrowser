@@ -46,7 +46,6 @@ class MovieCellViewModel : NSObject {
             case .success(let movieDetails):
                 guard let runtime = movieDetails.runtime else { return }
                 self.runtime.value = Helper.minutesToMinutesAndHours(durationInMinutes: runtime)
-                print("Runtime: \(runtime)")
             case .failure(let error):
                 print("Cannot get movie detail, error \(error)")
             }

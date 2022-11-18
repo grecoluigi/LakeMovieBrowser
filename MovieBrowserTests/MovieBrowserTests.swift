@@ -32,5 +32,13 @@ final class MovieBrowserTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testHourConversion() throws {
+        let durations = [0, 10, 59, 60, 100, 12345]
+        let expectedResults = ["0m", "10m", "59m","1h", "1h 40m", "205h 45m"]
+        for (index, duration) in durations.enumerated() {
+            XCTAssertEqual(Helper.minutesToMinutesAndHours(durationInMinutes: duration), expectedResults[index])
+        }
+    }
 
 }

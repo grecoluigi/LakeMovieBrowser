@@ -14,6 +14,8 @@ class ConfigurationSettings {
     private var imageBaseURL : String?
     private var imageSize : String?
     
+    let limitMoviesToFifty : Bool = false
+    
     func imageURL(from path: String) -> URL? {
         guard let imageBaseURL = imageBaseURL, let imageSize = imageSize else { return nil }
         return URL(string: imageBaseURL)?.appending(path: imageSize).appending(path: path)

@@ -30,6 +30,7 @@ class MoviesViewModel : NSObject {
     
     func getMoviesByGenre() {
         guard let currentGenreId = currentGenreId else { fatalError("Did not set genreId")}
+        if (ConfigurationSettings.shared.limitMoviesToFifty && movies.value.count >= 50) { return }
         isLoadingMovies = true
         moviesProvider.getMovies(byGenre: currentGenreId, page: currentPage) { result in
             switch result {

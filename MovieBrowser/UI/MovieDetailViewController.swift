@@ -30,10 +30,17 @@ class MovieDetailViewController: UIViewController {
     }
     
     func setupUI() {
-        titleLabel.text = movieVM.title
-        subtitleLabel.text = "\(movieVM.title) - \(movieVM.releaseDate)"
+        let movie = movieVM.movie
+        titleLabel.text = movie.title
+        self.subtitleLabel.text = ""
+        if movie.title != movie.originalTitle {
+            subtitleLabel.text = movie.originalTitle
+        }
+        if let releaseDate = movie.releaseDate {
+            subtitleLabel.text != "" ? subtitleLabel.text?.append(" - \(releaseDate)") : subtitleLabel.text?.append("\(releaseDate)")
+        }
         posterImageView.image = movieVM.posterImage.value
-        overviewLabel.text = movieVM.overview
+        overviewLabel.text = movie.overview
         favoritesButton.setTitle("addToFavorites".localized, for: .normal)
     }
     

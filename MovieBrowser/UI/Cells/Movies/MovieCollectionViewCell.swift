@@ -11,6 +11,11 @@ class MovieCollectionViewCell: UICollectionViewCell {
 
     var cornerRadius: CGFloat = 16.0
     
+    static let identifier = "movieCollectionViewCell"
+    static func nib() -> UINib {
+        return UINib(nibName: "MovieCollectionViewCell", bundle: nil)
+    }
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var bodyTextView: UITextView!
@@ -68,11 +73,11 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
 
     func configure() {
-        titleLabel.text = vm.title
+        titleLabel.text = vm.movie.title
         yearLabel.text = vm.releaseDate?.yearFromDate
-        bodyTextView.text = vm.overview
+        bodyTextView.text = vm.movie.overview
         vm.downloadPosterImage()
-        vm.getMovieRuntime()
+        vm.getMovieDetails()
     }
 
 }

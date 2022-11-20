@@ -49,7 +49,7 @@ final class MoviesViewController: UIViewController {
         cellProvider: { (collectionView, indexPath, movie) ->
           UICollectionViewCell? in
           let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "movieCollectionViewCell",
+            withReuseIdentifier: MovieCollectionViewCell.identifier,
             for: indexPath) as? MovieCollectionViewCell
             let apiManager = ApiManager()
             cell?.vm = MovieCellViewModel(movie: movie, movieDetailProvider: MovieDetailProvider(apiManager: apiManager))
@@ -118,7 +118,7 @@ final class MoviesViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
-        collectionView.register(UINib(nibName:"MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier:"movieCollectionViewCell")
+        collectionView.register(MovieCollectionViewCell.nib(), forCellWithReuseIdentifier:MovieCollectionViewCell.identifier)
         collectionView.delegate = self
     }
     

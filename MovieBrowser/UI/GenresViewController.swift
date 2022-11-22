@@ -66,6 +66,7 @@ final class GenresViewController: UIViewController {
         prepareRootView()
         prepareTableView()
         prepareActivityIndicator()
+        addFavoritesBarButtonItem()
     }
 
     private func prepareRootView() {
@@ -96,6 +97,18 @@ final class GenresViewController: UIViewController {
         ])
         activityIndicator.hidesWhenStopped = true
     }
+    
+    private func addFavoritesBarButtonItem() {
+        let favoritesButton = UIBarButtonItem(image: UIImage(systemName: "star.circle.fill"), style: .plain, target: self, action: #selector(showFavorites))
+        self.navigationItem.rightBarButtonItem  = favoritesButton
+    }
+    
+    @objc func showFavorites() {
+        let favoritesVC = FavoritesViewController()
+        favoritesVC.favoritesVM = FavoritesViewModel()
+        favoritesVC.modalPresentationStyle = .popover
+        present(favoritesVC, animated: true)
+    }
 
     /*
     private func getGenres() {
@@ -122,7 +135,7 @@ extension GenresViewController: UITableViewDelegate {
         let apiManager = ApiManager()
         let moviesProvider = MoviesProvider(apiManager: apiManager)
         let genre = genresVM.genres.value[indexPath.row]
-        let moviesViewModel = MoviesViewModel(moviesProvider: moviesProvider, genreId: genre.id)
+        let moviesViewModel = MoviesViewModel(moviesProvider: moviesProvider, genre: genre)
         let moviesVC = MoviesViewController(vm: moviesViewModel)
         moviesVC.title = genre.name
         navigationController?.pushViewController(moviesVC, animated: true)

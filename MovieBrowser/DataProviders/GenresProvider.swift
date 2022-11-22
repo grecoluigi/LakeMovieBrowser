@@ -14,7 +14,7 @@ final class GenresProvider {
         self.apiManager = apiManager
     }
 
-    func getGenres(completion: @escaping (Result<[Genre], Error>) -> Void) {
+    func getGenres(completion: @escaping (Result<[GenreModel], Error>) -> Void) {
         apiManager.makeRequest(request: ApiRequest(endpoint: .genres)) { (response: Result<GenresResponse, Error>) in
             switch response {
             case let .success(response):
@@ -27,5 +27,5 @@ final class GenresProvider {
 }
 
 private struct GenresResponse: Codable {
-    let genres: [Genre]
+    let genres: [GenreModel]
 }

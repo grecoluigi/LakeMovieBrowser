@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Genre: Codable {
+struct GenreModel: Codable {
     let id: Int
     let name: String
 }

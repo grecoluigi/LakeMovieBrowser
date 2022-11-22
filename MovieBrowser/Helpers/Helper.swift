@@ -17,4 +17,8 @@ struct Helper {
             return durationInMinutes > 59 ? "\(hours)h \(minutes)m" : "\(minutes)m"
         }
     }
+    
+    static var coreDataModelName : String {
+        return "Movie"
+    }
 }

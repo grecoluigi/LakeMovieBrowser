@@ -31,7 +31,7 @@ final class MoviesProvider {
 
 struct MoviesResponse: Codable {
     let page : Int
-    let results: [Movie]
+    let results: [MovieModel]
     let totalPages: Int
     let totalResults: Int
     

@@ -14,22 +14,22 @@ class MoviesViewModel : NSObject {
     var isLoadingMovies : Bool = false
     var currentPage : Int = 1
     var totalPages : Int = 1
-    var movies : Dynamic<[Movie]>
-    var currentGenreId: Int?
+    var movies : Dynamic<[MovieModel]>
+    var currentGenre : GenreModel?
     
     var error : Dynamic<String>
     
-    init(moviesProvider: MoviesProvider, genreId: Int) {
+    init(moviesProvider: MoviesProvider, genre: GenreModel) {
         self.moviesProvider = moviesProvider
-        currentGenreId = genreId
-        movies = Dynamic<[Movie]>([])
+        currentGenre = genre
+        movies = Dynamic<[MovieModel]>([])
         error = Dynamic<String>("")
     }
     
 
     
     func getMoviesByGenre() {
-        guard let currentGenreId = currentGenreId else { fatalError("Did not set genreId")}
+        guard let currentGenreId = currentGenre?.id else { fatalError("Did not set genreId")}
         if (ConfigurationSettings.shared.limitMoviesToFifty && movies.value.count >= 50) { return }
         isLoadingMovies = true
         moviesProvider.getMovies(byGenre: currentGenreId, page: currentPage) { result in
@@ -49,7 +49,7 @@ class MoviesViewModel : NSObject {
     
     
     func clearMovies() {
-        currentGenreId = nil
+        currentGenre = nil
         currentPage = 1
         totalPages = 1
         self.movies.value = []

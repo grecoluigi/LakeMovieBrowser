@@ -21,6 +21,7 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupFavoritesButton()
     }
 
 
@@ -41,13 +42,30 @@ class MovieDetailViewController: UIViewController {
         }
         posterImageView.image = movieVM.posterImage.value
         overviewLabel.text = movie.overview
-        favoritesButton.setTitle("addToFavorites".localized, for: .normal)
+    }
+    
+    func setupFavoritesButton() {
+        if movieVM.isFavorite {
+            favoritesButton.setTitle("removeFromFavorites".localized, for: .normal)
+            favoritesButton.setImage(UIImage(systemName: "star"), for: .normal)
+        } else {
+            favoritesButton.setTitle("addToFavorites".localized, for: .normal)
+            favoritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @IBAction func favoriteButtonPressed(_ sender: UIButton) {
+        if movieVM.isFavorite {
+            movieVM.removeFromFavorites()
+        } else {
+            movieVM.favoriteMove()
+        }
+        setupFavoritesButton()
+    }
     /*
     // MARK: - Navigation
 

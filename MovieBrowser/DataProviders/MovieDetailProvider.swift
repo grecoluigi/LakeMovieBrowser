@@ -14,8 +14,8 @@ final class MovieDetailProvider {
         self.apiManager = apiManager
     }
 
-    func getMovieDetails(for movie: Movie, completion: @escaping (Result<Movie, Error>) -> Void) {
-        apiManager.makeRequest(request: ApiRequest(endpoint: .movie, urlparams: ["id":"\(movie.id)"])) { (response: Result<Movie, Error>) in
+    func getMovieDetails(for movie: MovieModel, completion: @escaping (Result<MovieModel, Error>) -> Void) {
+        apiManager.makeRequest(request: ApiRequest(endpoint: .movie, urlparams: ["id":"\(movie.id)"])) { (response: Result<MovieModel, Error>) in
             switch response {
             case let .success(response):
                 completion(.success(response))

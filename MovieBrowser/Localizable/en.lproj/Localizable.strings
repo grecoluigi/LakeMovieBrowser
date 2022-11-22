@@ -10,5 +10,6 @@
 "ok" = "Ok";
 "error" = "Error";
 "addToFavorites" = "Add to favorites";
-"removeToFavorites" = "Remove from favorites";
+"removeFromFavorites" = "Remove from favorites";
 "favorites" = "Favorites";
+"favoritesFor" = "Favorites for ";

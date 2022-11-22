@@ -11,12 +11,12 @@ class GenresViewModel : NSObject {
     //Genres
     
     private let genresProvider: GenresProvider
-    var genres : Dynamic<[Genre]>
+    var genres : Dynamic<[GenreModel]>
     var error : Dynamic<String>
     
     init(genresProvider: GenresProvider) {
         self.genresProvider = genresProvider
-        genres = Dynamic<[Genre]>([])
+        genres = Dynamic<[GenreModel]>([])
         error = Dynamic<String>("")
     }
     

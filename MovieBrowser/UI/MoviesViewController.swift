@@ -8,10 +8,6 @@
 import UIKit
 
 final class MoviesViewController: UIViewController {
-    private enum Constants {
-        static let cellId = "movieCell"
-        static let collectionViewCellId = "movieCollectionViewCell"
-    }
     
     enum Section {
       case main
@@ -22,8 +18,8 @@ final class MoviesViewController: UIViewController {
     private let activityIndicator = UIActivityIndicatorView()
     private lazy var dataSource = makeDataSource()
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, Movie>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Movie>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieModel>
     
     init(vm: MoviesViewModel) {
         self.moviesVM = vm
@@ -96,6 +92,19 @@ final class MoviesViewController: UIViewController {
     private func prepareUI() {
         prepareCollectionView()
         prepareActivityIndicator()
+        addFavoritesBarButtonItem()
+    }
+    
+    private func addFavoritesBarButtonItem() {
+        let favoritesButton = UIBarButtonItem(image: UIImage(systemName: "star.circle.fill"), style: .plain, target: self, action: #selector(showFavorites))
+        self.navigationItem.rightBarButtonItem  = favoritesButton
+    }
+    
+    @objc func showFavorites() {
+        let favoritesVC = FavoritesViewController()
+        favoritesVC.favoritesVM = FavoritesViewModel(genre: moviesVM.currentGenre)
+        favoritesVC.modalPresentationStyle = .popover
+        present(favoritesVC, animated: true)
     }
     
     private func prepareActivityIndicator() {
@@ -122,7 +131,7 @@ final class MoviesViewController: UIViewController {
         collectionView.delegate = self
     }
     
-    func createLayout() -> UICollectionViewLayout {
+    private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in
             let sideInset: CGFloat = 24
 

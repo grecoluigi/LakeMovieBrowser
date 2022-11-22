@@ -70,6 +70,10 @@ class MovieCollectionViewCell: UICollectionViewCell {
                 self?.durationLabel.text = self?.vm.runtime.value
             }
         }
+        
+        vm.error.bind { [weak self] (_) in
+            print(self?.vm.error.value)
+        }
     }
 
     func configure() {

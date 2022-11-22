@@ -30,6 +30,7 @@ class MovieDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    
     func setupUI() {
         let movie = movieVM.movie
         titleLabel.text = movie.title

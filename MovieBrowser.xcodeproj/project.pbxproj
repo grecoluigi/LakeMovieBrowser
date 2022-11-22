@@ -36,9 +36,7 @@
 		12A23D16292CD73800EFA9C7 /* FavoriteCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12A23D14292CD73800EFA9C7 /* FavoriteCollectionViewCell.xib */; };
 		814836BE2925733300624131 /* MoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814836BD2925733300624131 /* MoviesViewModel.swift */; };
 		814836C12925738100624131 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814836C02925738100624131 /* Dynamic.swift */; };
-		814836C4292576CA00624131 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814836C3292576CA00624131 /* UIAlertController+.swift */; };
 		814836C6292576F400624131 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814836C5292576F400624131 /* String+.swift */; };
-		814836C82925775000624131 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814836C72925775000624131 /* UIViewController+.swift */; };
 		814836CA2925900600624131 /* MoviesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814836C92925900600624131 /* MoviesProvider.swift */; };
 		814836CC2925902D00624131 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814836CB2925902D00624131 /* Movie.swift */; };
 		F9A76D3E2915356B006636D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A76D3D2915356B006636D2 /* AppDelegate.swift */; };
@@ -97,9 +95,7 @@
 		12A23D14292CD73800EFA9C7 /* FavoriteCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteCollectionViewCell.xib; sourceTree = "<group>"; };
 		814836BD2925733300624131 /* MoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesViewModel.swift; sourceTree = "<group>"; };
 		814836C02925738100624131 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
-		814836C3292576CA00624131 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
 		814836C5292576F400624131 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
-		814836C72925775000624131 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		814836C92925900600624131 /* MoviesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesProvider.swift; sourceTree = "<group>"; };
 		814836CB2925902D00624131 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		F9A76D3A2915356B006636D2 /* MovieBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,9 +209,7 @@
 		814836C2292576B700624131 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				814836C3292576CA00624131 /* UIAlertController+.swift */,
 				814836C5292576F400624131 /* String+.swift */,
-				814836C72925775000624131 /* UIViewController+.swift */,
 				125A66F8292657E600FFA985 /* UIImageView+.swift */,
 				125A66FA29267D0800FFA985 /* UIView+.swift */,
 				1215CD8A2927D21E0010B355 /* Int+.swift */,
@@ -435,7 +429,6 @@
 			files = (
 				12A23D0F292CCEDA00EFA9C7 /* FavoritesViewModel.swift in Sources */,
 				1215CD882927B6F50010B355 /* MovieDetailProvider.swift in Sources */,
-				814836C82925775000624131 /* UIViewController+.swift in Sources */,
 				F9CDCEA529155DF9005D9847 /* Genre.swift in Sources */,
 				F9A76D422915356B006636D2 /* GenresViewController.swift in Sources */,
 				1215CD9C2927F35D0010B355 /* GenresViewModel.swift in Sources */,
@@ -461,7 +454,6 @@
 				12A23D11292CD50A00EFA9C7 /* FavoriteCellViewModel.swift in Sources */,
 				1215CD8B2927D21E0010B355 /* Int+.swift in Sources */,
 				814836C12925738100624131 /* Dynamic.swift in Sources */,
-				814836C4292576CA00624131 /* UIAlertController+.swift in Sources */,
 				F9CDCEA029155DBD005D9847 /* ApiRequest.swift in Sources */,
 				122C198629279A52007197A7 /* ConfigurationSettings.swift in Sources */,
 				125A66F9292657E600FFA985 /* UIImageView+.swift in Sources */,

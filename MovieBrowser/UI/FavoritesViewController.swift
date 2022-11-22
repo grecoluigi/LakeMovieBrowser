@@ -36,6 +36,16 @@ class FavoritesViewController : UIViewController {
                 self?.applySnapshot()
             }
         }
+        
+        favoritesVM.error.bind { [weak self] (_) in
+            DispatchQueue.main.async {
+                guard let error = self?.favoritesVM.error.value else { return }
+                let alert = UIAlertController(title: "error".localized, message: error, preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Ok".localized, style: .default, handler: nil)
+                alert.addAction(cancelAction)
+                self?.present(alert, animated: true)
+            }
+        }
     }
     
     func makeDataSource() -> DataSource {

@@ -84,7 +84,10 @@ final class MoviesViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 guard let error = self?.moviesVM.error.value else { return }
-                UIAlertController.alert("Error".localized, error, completion: { (okaction) in })
+                let alert = UIAlertController(title: "error".localized, message: error, preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Ok".localized, style: .default, handler: nil)
+                alert.addAction(cancelAction)
+                self?.present(alert, animated: true)
             }
         }
     }

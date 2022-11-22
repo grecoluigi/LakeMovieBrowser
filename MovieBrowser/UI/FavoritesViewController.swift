@@ -97,23 +97,21 @@ class FavoritesViewController : UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
         collectionView.register(FavoriteCollectionViewCell.nib(), forCellWithReuseIdentifier:FavoriteCollectionViewCell.identifier)
-        collectionView.delegate = self
-        //collectionView.dataSource = self
     }
     
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in
-            let sideInset: CGFloat = 24
+            let sideInset: CGFloat = 4
 
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = .init(top: 0, leading: sideInset, bottom: 0, trailing: sideInset)
 
-            let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(self.collectionView.bounds.width), heightDimension: .estimated(250))
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+            let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(self.collectionView.bounds.width), heightDimension: .estimated(300))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
             let section = NSCollectionLayoutSection(group: group)
-            section.interGroupSpacing = 16
+            section.interGroupSpacing = 8
             let sectionSideInset = (environment.container.contentSize.width - self.collectionView.bounds.width) / 2
             section.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: sectionSideInset, bottom: 0, trailing: sectionSideInset)
             section.orthogonalScrollingBehavior = .none
@@ -122,30 +120,3 @@ class FavoritesViewController : UIViewController {
         return layout
     }
 }
-
-
-extension FavoritesViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteCollectionViewCell {
-//            let vc = MovieDetailViewController(movieVM: cell.vm)
-//            vc.modalPresentationStyle = .popover
-//            self.present(vc, animated: true)
-//        }
-    }
-
-}
-
-//extension FavoritesViewController: UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let movie = favoritesVM.getMovie(at: indexPath.row)
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath) as! FavoriteCollectionViewCell
-//            cell.vm = FavoriteCellViewModel(movie: movie)
-//            cell.configure()
-//            return cell
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return favoritesVM.favoritesCount
-//    }
-//
-//}

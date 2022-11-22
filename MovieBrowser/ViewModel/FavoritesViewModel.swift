@@ -43,13 +43,13 @@ class FavoritesViewModel : NSObject {
                 for case let movie as Movie in movies  {
                     favs.append(movie)
                 }
-                self.favorites.value = favs
+                self.favorites.value = favs.sorted(by: { $0.title! < $1.title! })
             } catch let error as NSError {
                 self.error.value = ("Error retrieving favorites \(error), \(error.userInfo)")
             }
         } else {
             do {
-                favorites.value = try CoreDataStack.shared.managedContext.fetch(Movie.fetchRequest())
+                favorites.value = try CoreDataStack.shared.managedContext.fetch(Movie.fetchRequest()).sorted(by: { $0.title! < $1.title! })
             } catch let error as NSError {
                 self.error.value = ("Error retrieving favorites \(error), \(error.userInfo)")
             }

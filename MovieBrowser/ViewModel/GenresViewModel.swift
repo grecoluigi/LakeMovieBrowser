@@ -8,8 +8,6 @@
 import Foundation
 
 class GenresViewModel : NSObject {
-    //Genres
-    
     private let genresProvider: GenresProvider
     var genres : Dynamic<[GenreModel]>
     var error : Dynamic<String>

@@ -10,7 +10,7 @@ import UIKit
 final class MoviesViewController: UIViewController {
     
     enum Section {
-      case main
+        case main
     }
     
     private let moviesVM : MoviesViewModel
@@ -36,29 +36,6 @@ final class MoviesViewController: UIViewController {
         setupBindings()
         prepareUI()
         applySnapshot(animatingDifferences: false)
-        //showLoadMoreView()
-    }
-    
-    func makeDataSource() -> DataSource {
-      let dataSource = DataSource(
-        collectionView: collectionView,
-        cellProvider: { (collectionView, indexPath, movie) ->
-          UICollectionViewCell? in
-          let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MovieCollectionViewCell.identifier,
-            for: indexPath) as? MovieCollectionViewCell
-            let apiManager = ApiManager()
-            cell?.vm = MovieCellViewModel(movie: movie, movieDetailProvider: MovieDetailProvider(apiManager: apiManager))
-          return cell
-      })
-      return dataSource
-    }
-    
-    func applySnapshot(animatingDifferences: Bool = true) {
-      var snapshot = Snapshot()
-      snapshot.appendSections([.main])
-        snapshot.appendItems(moviesVM.movies.value)
-      dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -90,6 +67,28 @@ final class MoviesViewController: UIViewController {
                 self?.present(alert, animated: true)
             }
         }
+    }
+    
+    func makeDataSource() -> DataSource {
+        let dataSource = DataSource(
+            collectionView: collectionView,
+            cellProvider: { (collectionView, indexPath, movie) ->
+                UICollectionViewCell? in
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: MovieCollectionViewCell.identifier,
+                    for: indexPath) as? MovieCollectionViewCell
+                let apiManager = ApiManager()
+                cell?.vm = MovieCellViewModel(movie: movie, movieDetailProvider: MovieDetailProvider(apiManager: apiManager))
+                return cell
+            })
+        return dataSource
+    }
+    
+    func applySnapshot(animatingDifferences: Bool = true) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(moviesVM.movies.value)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     private func prepareUI() {
@@ -137,14 +136,14 @@ final class MoviesViewController: UIViewController {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in
             let sideInset: CGFloat = 24
-
+            
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = .init(top: 0, leading: sideInset, bottom: 0, trailing: sideInset)
-
+            
             let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(self.collectionView.bounds.width), heightDimension: .absolute(199))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
+            
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = 16
             let sectionSideInset = (environment.container.contentSize.width - self.collectionView.bounds.width) / 2
@@ -158,7 +157,6 @@ final class MoviesViewController: UIViewController {
 // MARK: - UIScrollViewDelegate
 
 extension MoviesViewController: UIScrollViewDelegate {
-    
     // Infinite loading
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard scrollView == collectionView,
@@ -167,68 +165,11 @@ extension MoviesViewController: UIScrollViewDelegate {
         if moviesVM.currentPage < moviesVM.totalPages {
             moviesVM.currentPage += 1
             moviesVM.getMoviesByGenre()
-            //showLoadMoreView()
-            //showActivityIndicatory()
-            //let spinner = UIActivityIndicatorView(style: .medium)
-            //spinner.startAnimating()
-            //spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
-            //view.addSubview(spinner)
-            //view.bringSubviewToFront(spinner)
-            //self.collectionView.supplementaryView(forElementKind: <#T##String#>, at: <#T##IndexPath#>)
-            //self.tableView.tableFooterView = spinner
-            //self.tableView.tableFooterView?.isHidden = false
-             
         }
     }
 }
- 
 
-
-// MARK: - Loading More View
-extension MoviesViewController {
-    func showActivityIndicatory() {
-        let container: UIView = UIView()
-        container.frame = CGRect(x: 0, y: 0, width: 80, height: 80) // Set X and Y whatever you want
-        container.backgroundColor = .blue
-        container.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(activityIndicator)
-        
-        self.view.addSubview(container)
-        activityIndicator.startAnimating()
-        NSLayoutConstraint.activate([
-            container.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: 30),
-            container.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
-            activityIndicator.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            activityIndicator.centerXAnchor.constraint(equalTo: container.centerXAnchor)
-        ])
-    }
-    
-    func showLoadMoreView() {
-        let popOver = UIView()
-            popOver.isHidden = true
-            popOver.frame = CGRectMake(self.view.frame.width / 2, 20, 0, 0)
-        popOver.translatesAutoresizingMaskIntoConstraints = false
-            popOver.backgroundColor = .blue
-            popOver.layer.cornerRadius = 9
-            self.view.addSubview(popOver)
-        NSLayoutConstraint.activate([
-            popOver.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            popOver.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -30)
-        ])
-        let spinner = UIActivityIndicatorView(style: .medium)
-        spinner.startAnimating()
-        spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: popOver.bounds.width, height: popOver.bounds.height)
-        spinner.center = popOver.center
-            popOver.addSubview(spinner)
-            popOver.bringSubviewToFront(spinner)
-
-
-        UIView.animate(withDuration: 1.0, animations: {
-                popOver.isHidden = false
-            })
-    }
-}
-
+// MARK: - UICollectionViewDelegate
 extension MoviesViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {

@@ -23,7 +23,6 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     
     var vm : FavoriteCellViewModel! {
         didSet {
-            self.setupBindings()
             self.configure()
         }
     }
@@ -39,6 +38,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 5)
     }
+    
 
     
     override func layoutSubviews() {
@@ -50,26 +50,13 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         titleLabel.text = ""
         yearLabel.text = ""
         durationLabel.text = ""
         posterImageView.image = nil
-        removeFromFavoritesButton.setTitle("removeFromFavorites".localized, for: .normal)
-        super.prepareForReuse()
-    }
-    
-    private func setupBindings() {
-//        vm.posterImage.bind { [weak self] (_) in
-//            DispatchQueue.main.async {
-//                self?.posterImageView.fade(to: self!.vm.posterImage.value)
-//            }
-//        }
-//
-//        vm.runtime.bind { [weak self] (_) in
-//            DispatchQueue.main.async {
-//                self?.durationLabel.text = self?.vm.runtime.value
-//            }
-//        }
+        //removeFromFavoritesButton.setTitle("removeFromFavorites".localized, for: .normal)
+        //removeFromFavoritesButton.titleLabel?.font = .systemFont(ofSize: 8, weight: .medium)
     }
 
     func configure() {
@@ -79,6 +66,9 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         if let imageData = vm.movie.poster {
             self.posterImageView.image = UIImage(data: imageData)
         }
+        let buttonTitle = NSMutableAttributedString(string: "removeFromFavorites".localized, attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)])
+        removeFromFavoritesButton.setAttributedTitle(buttonTitle, for: .normal)
     }
 
     @IBAction func removeFromFavorites(_ sender: UIButton) {

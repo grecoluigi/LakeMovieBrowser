@@ -13,12 +13,9 @@ final class GenresViewController: UIViewController {
         static let title = "genres".localized
     }
 
-    //private let genresProvider: GenresProvider
     private let genresVM : GenresViewModel
     private let tableView = UITableView()
     private let activityIndicator = UIActivityIndicatorView()
-
-    //private var genres = [Genre]()
 
     init(vm: GenresViewModel) {
         self.genresVM = vm
@@ -34,8 +31,6 @@ final class GenresViewController: UIViewController {
         super.viewDidLoad()
         setupBindings()
         prepareUI()
-        
-        //getGenres()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,25 +107,7 @@ final class GenresViewController: UIViewController {
         favoritesVC.modalPresentationStyle = .popover
         present(favoritesVC, animated: true)
     }
-
-    /*
-    private func getGenres() {
-        activityIndicator.startAnimating()
-
-        genresProvider.getGenres { result in
-            switch result {
-            case let .success(genres):
-                self.genres = genres
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    self.activityIndicator.stopAnimating()
-                }
-            case let .failure(error):
-                print("Cannot get genres, reason: \(error)")
-            }
-        }
-    }
-     */
+    
 }
 
 extension GenresViewController: UITableViewDelegate {

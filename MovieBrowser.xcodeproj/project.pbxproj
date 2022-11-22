@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1215CD882927B6F50010B355 /* MovieDetailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1215CD872927B6F50010B355 /* MovieDetailProvider.swift */; };
-		1215CD8B2927D21E0010B355 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1215CD8A2927D21E0010B355 /* Int+.swift */; };
 		1215CD8E2927D3A50010B355 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1215CD8D2927D3A50010B355 /* Helper.swift */; };
 		1215CD932927DCDE0010B355 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1215CD952927DCDE0010B355 /* Localizable.strings */; };
 		1215CD992927E4690010B355 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1215CD972927E4690010B355 /* MovieDetailViewController.swift */; };
@@ -24,7 +23,6 @@
 		122C198629279A52007197A7 /* ConfigurationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C198529279A52007197A7 /* ConfigurationSettings.swift */; };
 		125A66F5292654F700FFA985 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125A66F4292654F700FFA985 /* Endpoint.swift */; };
 		125A66F9292657E600FFA985 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125A66F8292657E600FFA985 /* UIImageView+.swift */; };
-		125A66FB29267D0800FFA985 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125A66FA29267D0800FFA985 /* UIView+.swift */; };
 		125A66FE292685F600FFA985 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125A66FC292685F600FFA985 /* MovieCollectionViewCell.swift */; };
 		125A66FF292685F600FFA985 /* MovieCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 125A66FD292685F600FFA985 /* MovieCollectionViewCell.xib */; };
 		125A67052926A85E00FFA985 /* ConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125A67042926A85E00FFA985 /* ConfigurationProvider.swift */; };
@@ -65,7 +63,6 @@
 
 /* Begin PBXFileReference section */
 		1215CD872927B6F50010B355 /* MovieDetailProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailProvider.swift; sourceTree = "<group>"; };
-		1215CD8A2927D21E0010B355 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		1215CD8D2927D3A50010B355 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		1215CD922927DCBE0010B355 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		1215CD942927DCDE0010B355 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -83,7 +80,6 @@
 		122C198529279A52007197A7 /* ConfigurationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationSettings.swift; sourceTree = "<group>"; };
 		125A66F4292654F700FFA985 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		125A66F8292657E600FFA985 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
-		125A66FA29267D0800FFA985 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		125A66FC292685F600FFA985 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		125A66FD292685F600FFA985 /* MovieCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCollectionViewCell.xib; sourceTree = "<group>"; };
 		125A67042926A85E00FFA985 /* ConfigurationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationProvider.swift; sourceTree = "<group>"; };
@@ -153,6 +149,10 @@
 			isa = PBXGroup;
 			children = (
 				1215CD9E292A91DC0010B355 /* CoreDataStack.swift */,
+				1215CDB2292A99FD0010B355 /* Movie+CoreDataProperties.swift */,
+				1215CDB1292A99FD0010B355 /* Movie+CoreDataClass.swift */,
+				1215CDB3292A99FD0010B355 /* Genre+CoreDataClass.swift */,
+				1215CDB4292A99FD0010B355 /* Genre+CoreDataProperties.swift */,
 				1215CDA6292A96D00010B355 /* Movie.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -211,8 +211,6 @@
 			children = (
 				814836C5292576F400624131 /* String+.swift */,
 				125A66F8292657E600FFA985 /* UIImageView+.swift */,
-				125A66FA29267D0800FFA985 /* UIView+.swift */,
-				1215CD8A2927D21E0010B355 /* Int+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -220,10 +218,6 @@
 		F9A76D312915356B006636D2 = {
 			isa = PBXGroup;
 			children = (
-				1215CDB1292A99FD0010B355 /* Movie+CoreDataClass.swift */,
-				1215CDB2292A99FD0010B355 /* Movie+CoreDataProperties.swift */,
-				1215CDB3292A99FD0010B355 /* Genre+CoreDataClass.swift */,
-				1215CDB4292A99FD0010B355 /* Genre+CoreDataProperties.swift */,
 				F9A76D3C2915356B006636D2 /* MovieBrowser */,
 				F9A76D532915356C006636D2 /* MovieBrowserTests */,
 				F9A76D3B2915356B006636D2 /* Products */,
@@ -435,7 +429,6 @@
 				1215CDB8292A99FD0010B355 /* Genre+CoreDataProperties.swift in Sources */,
 				1215CD992927E4690010B355 /* MovieDetailViewController.swift in Sources */,
 				1215CDB6292A99FD0010B355 /* Movie+CoreDataProperties.swift in Sources */,
-				125A66FB29267D0800FFA985 /* UIView+.swift in Sources */,
 				1215CD8E2927D3A50010B355 /* Helper.swift in Sources */,
 				F9A76D3E2915356B006636D2 /* AppDelegate.swift in Sources */,
 				F9CDCE9C29155CC8005D9847 /* ApiManager.swift in Sources */,
@@ -452,7 +445,6 @@
 				125A66F5292654F700FFA985 /* Endpoint.swift in Sources */,
 				F9A76D402915356B006636D2 /* SceneDelegate.swift in Sources */,
 				12A23D11292CD50A00EFA9C7 /* FavoriteCellViewModel.swift in Sources */,
-				1215CD8B2927D21E0010B355 /* Int+.swift in Sources */,
 				814836C12925738100624131 /* Dynamic.swift in Sources */,
 				F9CDCEA029155DBD005D9847 /* ApiRequest.swift in Sources */,
 				122C198629279A52007197A7 /* ConfigurationSettings.swift in Sources */,

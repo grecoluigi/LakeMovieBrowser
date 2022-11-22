@@ -9,14 +9,12 @@ import Foundation
 
 class MoviesViewModel : NSObject {
     
-    // Movies by genre
     private let moviesProvider: MoviesProvider
     var isLoadingMovies : Bool = false
     var currentPage : Int = 1
     var totalPages : Int = 1
     var movies : Dynamic<[MovieModel]>
     var currentGenre : GenreModel?
-    
     var error : Dynamic<String>
     
     init(moviesProvider: MoviesProvider, genre: GenreModel) {
@@ -25,8 +23,6 @@ class MoviesViewModel : NSObject {
         movies = Dynamic<[MovieModel]>([])
         error = Dynamic<String>("")
     }
-    
-
     
     func getMoviesByGenre() {
         guard let currentGenreId = currentGenre?.id else { fatalError("Did not set genreId")}
@@ -42,11 +38,9 @@ class MoviesViewModel : NSObject {
             case .failure(let error):
                 self.error.value = "Cannot get movies, reason: \(error)"
                 self.isLoadingMovies = false
-                print(error)
             }
         }
     }
-    
     
     func clearMovies() {
         currentGenre = nil

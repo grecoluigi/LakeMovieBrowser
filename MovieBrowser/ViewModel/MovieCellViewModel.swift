@@ -10,7 +10,6 @@ import CoreData
 
 class MovieCellViewModel : NSObject {
     
-
     var posterImage: Dynamic<UIImage>
     let releaseDate: String?
     var movie: MovieModel
@@ -24,8 +23,7 @@ class MovieCellViewModel : NSObject {
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = predicate
         do {
-            let count = try CoreDataStack.shared.managedContext.count(for: fetchRequest)
-            if count > 0 {
+            if try CoreDataStack.shared.managedContext.count(for: fetchRequest) > 0 {
                 return true
             } else {
                 return false
@@ -67,7 +65,7 @@ class MovieCellViewModel : NSObject {
                 self.movie.originalTitle = movieDetails.originalTitle
                 self.movie.genres = movieDetails.genres
             case .failure(let error):
-                print("Cannot get movie detail, error \(error)")
+                self.error.value = "Cannot get movie detail, error \(error)"
             }
         }
     }
@@ -84,7 +82,8 @@ class MovieCellViewModel : NSObject {
         movie.releaseDate = self.movie.releaseDate
         movie.poster = self.posterImage.value.pngData()
         if let genres = self.movie.genres?.enumerated() {
-            for genre in genres {                let fetchRequest : NSFetchRequest<Genre> = Genre.fetchRequest()
+            for genre in genres {
+                let fetchRequest : NSFetchRequest<Genre> = Genre.fetchRequest()
                 let predicate = NSPredicate(format: "id == %ld", Int32(genre.element.id))
                 fetchRequest.fetchLimit = 1
                 fetchRequest.predicate = predicate

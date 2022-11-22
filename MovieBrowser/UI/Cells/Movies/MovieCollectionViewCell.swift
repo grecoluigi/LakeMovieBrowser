@@ -78,7 +78,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
 
     func configure() {
         titleLabel.text = vm.movie.title
-        yearLabel.text = vm.releaseDate?.yearFromDate
+        yearLabel.text = vm.releaseDate
         bodyTextView.text = vm.movie.overview
         vm.downloadPosterImage()
         vm.getMovieDetails()

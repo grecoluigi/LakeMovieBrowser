@@ -55,13 +55,11 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         yearLabel.text = ""
         durationLabel.text = ""
         posterImageView.image = nil
-        //removeFromFavoritesButton.setTitle("removeFromFavorites".localized, for: .normal)
-        //removeFromFavoritesButton.titleLabel?.font = .systemFont(ofSize: 8, weight: .medium)
     }
 
     func configure() {
         titleLabel.text = vm.movie.title
-        yearLabel.text = vm.movie.releaseDate
+        yearLabel.text = vm.movie.releaseDate?.yearFromDate
         durationLabel.text = Helper.minutesToMinutesAndHours(durationInMinutes: Int(vm.movie.runtime))
         if let imageData = vm.movie.poster {
             self.posterImageView.image = UIImage(data: imageData)

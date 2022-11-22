@@ -84,7 +84,7 @@ class FavoritesViewController : UIViewController {
         }
         self.view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
-        collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createLayout())
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

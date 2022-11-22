@@ -105,7 +105,7 @@ final class MoviesViewController: UIViewController {
     @objc func showFavorites() {
         let favoritesVC = FavoritesViewController()
         favoritesVC.favoritesVM = FavoritesViewModel(genre: moviesVM.currentGenre)
-        favoritesVC.modalPresentationStyle = .popover
+        favoritesVC.modalPresentationStyle = .automatic
         present(favoritesVC, animated: true)
     }
     
@@ -174,7 +174,7 @@ extension MoviesViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {
             let vc = MovieDetailViewController(movieVM: cell.vm)
-            vc.modalPresentationStyle = .popover
+            vc.modalPresentationStyle = .automatic
             self.present(vc, animated: true)
         }
     }

@@ -104,7 +104,7 @@ final class GenresViewController: UIViewController {
     @objc func showFavorites() {
         let favoritesVC = FavoritesViewController()
         favoritesVC.favoritesVM = FavoritesViewModel()
-        favoritesVC.modalPresentationStyle = .popover
+        favoritesVC.modalPresentationStyle = .automatic
         present(favoritesVC, animated: true)
     }
     

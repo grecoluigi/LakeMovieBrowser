@@ -35,13 +35,12 @@ final class MoviesViewController: UIViewController {
         super.viewDidLoad()
         setupBindings()
         prepareUI()
-        applySnapshot(animatingDifferences: false)
+        activityIndicator.startAnimating()
+        moviesVM.getMoviesByGenre()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        activityIndicator.startAnimating()
-        moviesVM.getMoviesByGenre()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
